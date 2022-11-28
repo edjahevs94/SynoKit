@@ -1,0 +1,6 @@
+framework module Pods_SynoKit {
+  umbrella header "Pods-SynoKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
