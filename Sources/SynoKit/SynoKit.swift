@@ -1,6 +1,14 @@
-public struct SynoKit {
-    public private(set) var text = "Hello, World!"
+import SwiftUI
 
-    public init() {
+public struct SynoKit {
+    
+    public struct SynoImage: View {
+        
+        
+        public var body: some View {
+            HStack {
+                Text("hi")
+            }
+        }
     }
 }

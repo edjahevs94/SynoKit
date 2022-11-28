@@ -1,4 +1,5 @@
 import XCTest
+import SwiftUI
 @testable import SynoKit
 
 final class SynoKitTests: XCTestCase {
