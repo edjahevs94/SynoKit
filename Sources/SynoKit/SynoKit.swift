@@ -5,6 +5,15 @@ public struct SynoKit {
     public init() {
         
     }
+    
+    public func getSynoImageFromCache(path: String) -> UIImage? {
+        var imageCache  = ImageCache.getImageCache()
+        guard let cacheImage = imageCache.get(forKey: path) else {
+            return nil
+        }
+        return cacheImage
+    }
+    
     public func getCredentials(domainPath: String, user: String, password: String){
         Service.shared.login(domainPath: domainPath, user: user, password: password) { response in
             
