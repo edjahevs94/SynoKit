@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "SynoKit"
-  spec.version      = "0.1.2"
+  spec.version      = "0.1.3"
   spec.summary      = "A short description of SynoKit."
 
   # This description is used to generate tags and improve search results.

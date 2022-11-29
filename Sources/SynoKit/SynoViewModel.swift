@@ -17,14 +17,14 @@ public class ViewModel: ObservableObject {
     init(photoPath: String, domainPath: String) {
         if photoPath.contains("jpeg") || photoPath.contains("png") || photoPath.contains("jpg") {
             if loadImageFromCache(path: photoPath) {
-                print("usando cache sin llamar al servicio")
+                //print("usando cache sin llamar al servicio")
                 loading = false
                 return
             }
-            print("nueva imagen llamando al servicio")
+            //print("nueva imagen llamando al servicio")
             getImage(path: photoPath, domainPath: domainPath)
         } else {
-            imageC = UIImage(named: "trofeo")
+            print("Image format is incorrect: Only jpeg, jpg or png formats are allowed.")
             loading = false
         }
     }
@@ -32,10 +32,11 @@ public class ViewModel: ObservableObject {
     func getImage(path: String, domainPath: String) {
         Service.shared.download(path: path, domainPath: domainPath) { response , loading  in
             guard let loadedImage = UIImage(data: response) else {
+                self.loading = loading
                 return
             }
             self.imageC = loadedImage
-            self.loading = false
+            self.loading = loading
             self.imageCache.set(forKey: path, image: loadedImage)
         }
             

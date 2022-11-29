@@ -26,9 +26,14 @@ public struct Service {
         
         let fullUrl = "\(domainPath)/webapi/entry.cgi?api=SYNO.FileStation.Download&version=2&method=download&path=\(path)&mode=%22open%22"
         
-        AF.download(fullUrl,method: .get , headers: nil).responseData { response in
-            if let data = response.value {
+        AF.download(fullUrl,method: .get , headers: nil).validate(statusCode: 200..<300).responseData { response in
+            switch response.result {
+            case .success(let data):
                 completion(data, false)
+            case .failure(let error):
+                completion(Data(), false)
+                print(error)
+                print(error.localizedDescription)
             }
         }
     }
