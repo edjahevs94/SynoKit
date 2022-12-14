@@ -16,8 +16,8 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "SynoKit"
-  spec.version      = "0.1.3"
-  spec.summary      = "A short description of SynoKit."
+  spec.version      = "0.1.4"
+  spec.summary      = "A library to get images from Synology easily."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?

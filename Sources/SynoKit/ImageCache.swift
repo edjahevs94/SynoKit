@@ -9,7 +9,13 @@ import Foundation
 import UIKit
 
 class ImageCache {
-    var cache = NSCache<NSString, UIImage>()
+    var cache: NSCache<NSString, UIImage> = {
+        let imageCache = NSCache<NSString, UIImage>()
+        imageCache.countLimit = 15
+        imageCache.totalCostLimit = 1024 * 1024 * 50
+        //imageCache.totalCostLimit = 1024 * 1024 * 50
+        return imageCache
+    }()
     
     func get(forKey: String) -> UIImage? {
         return cache.object(forKey: NSString(string: forKey))

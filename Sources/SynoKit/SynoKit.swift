@@ -41,11 +41,19 @@ public struct SynoKit {
         }
         
         public var body: some View {
-            if !(vm.loading) {
-                Image(uiImage: vm.imageC ?? placeHolder)
-                .resizable()
-            } else {
-                ProgressView()
+            VStack {
+                if !(vm.loading) {
+                    Image(uiImage: vm.imageC ?? placeHolder)
+                        .resizable()
+                } else {
+                    ProgressView()
+                }
+            }.onAppear{
+                if vm.imageC == nil {
+                    vm.setSynoImage(photoPath: path, domainPath: domainPath)
+                }
+            }.onDisappear{
+                vm.imageC = nil
             }
         }
     }

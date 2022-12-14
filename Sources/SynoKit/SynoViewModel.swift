@@ -15,6 +15,10 @@ public class ViewModel: ObservableObject {
     @Published var loading: Bool = true
     //new version with workspace
     init(photoPath: String, domainPath: String) {
+        setSynoImage(photoPath: photoPath, domainPath: domainPath)
+    }
+    
+    func setSynoImage(photoPath: String, domainPath: String){
         if photoPath.contains("jpeg") || photoPath.contains("png") || photoPath.contains("jpg") {
             if loadImageFromCache(path: photoPath) {
                 //print("usando cache sin llamar al servicio")
@@ -24,7 +28,7 @@ public class ViewModel: ObservableObject {
             //print("nueva imagen llamando al servicio")
             getImage(path: photoPath, domainPath: domainPath)
         } else {
-            print("Image format is incorrect: Only jpeg, jpg or png formats are allowed.")
+            //print("Image format is incorrect: Only jpeg, jpg or png formats are allowed.")
             loading = false
         }
     }
@@ -35,9 +39,9 @@ public class ViewModel: ObservableObject {
                 self.loading = loading
                 return
             }
-            self.imageC = loadedImage
+            self.imageC = loadedImage.aspectFittedToHeight(newHeight: 200)
             self.loading = loading
-            self.imageCache.set(forKey: path, image: loadedImage)
+            self.imageCache.set(forKey: path, image: loadedImage.aspectFittedToHeight(newHeight: 200))
         }
             
     }
