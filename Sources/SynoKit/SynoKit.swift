@@ -32,19 +32,28 @@ public struct SynoKit {
         @State var placeHolder: UIImage
         @State var path: String
         @State var domainPath: String
+        @State var isIcon : Bool
         
-        public init(path: String, domainPath: String, placeHolder: UIImage) {
+        public init(path: String, domainPath: String, placeHolder: UIImage, isIcon: Bool) {
             self._path = State(initialValue: path)
             self._domainPath = State(initialValue: domainPath)
             self._placeHolder = State(initialValue: placeHolder)
             self._vm = ObservedObject(wrappedValue: ViewModel(photoPath: path, domainPath: domainPath))
+            self._isIcon = State(initialValue: isIcon)
         }
         
         public var body: some View {
             VStack {
                 if !(vm.loading) {
-                    Image(uiImage: vm.imageC ?? placeHolder)
-                        .resizable()
+                    if isIcon{
+                        Image(uiImage: vm.imageC ?? placeHolder)
+                            .resizable()
+                            .renderingMode(.template)
+                    }else{
+                        
+                        Image(uiImage: vm.imageC ?? placeHolder)
+                            .resizable()
+                    }
                 } else {
                     ProgressView()
                 }
