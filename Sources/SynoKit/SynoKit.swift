@@ -32,13 +32,17 @@ public struct SynoKit {
         @State var placeHolder: UIImage
         @State var path: String
         @State var domainPath: String
+        @State var user: String
+        @State var password: String
         @State var isIcon : Bool
         
-        public init(path: String, domainPath: String, placeHolder: UIImage, isIcon: Bool) {
+        public init(user: String, password: String, path: String, domainPath: String, placeHolder: UIImage, isIcon: Bool) {
             self._path = State(initialValue: path)
             self._domainPath = State(initialValue: domainPath)
             self._placeHolder = State(initialValue: placeHolder)
-            self._vm = ObservedObject(wrappedValue: ViewModel(photoPath: path, domainPath: domainPath))
+            self._user = State(initialValue: user)
+            self._password = State(initialValue: password)
+            self._vm = ObservedObject(wrappedValue: ViewModel(user: user, password: password, photoPath: path, domainPath: domainPath))
             self._isIcon = State(initialValue: isIcon)
         }
         

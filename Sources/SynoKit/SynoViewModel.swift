@@ -14,7 +14,10 @@ public class ViewModel: ObservableObject {
     @Published var imageC: UIImage?
     @Published var loading: Bool = true
     //new version with workspace
-    init(photoPath: String, domainPath: String) {
+    init(user: String, password: String, photoPath: String, domainPath: String) {
+        if UserDefaults.standard.string(forKey: "did") == nil && UserDefaults.standard.string(forKey: "sid") == nil{
+            loginSynology(domainPath: domainPath, user: user, password: password)
+        }
         setSynoImage(photoPath: photoPath, domainPath: domainPath)
     }
     
@@ -31,6 +34,19 @@ public class ViewModel: ObservableObject {
             //print("Image format is incorrect: Only jpeg, jpg or png formats are allowed.")
             loading = false
         }
+    }
+    
+    func loginSynology(domainPath: String, user: String, password: String) {
+        
+        Service.shared.login(domainPath: domainPath, user: user, password: password) { response in
+                let did = response.data.did
+                let sid = response.data.sid
+            
+                UserDefaults.standard.set(did, forKey: "did")
+                UserDefaults.standard.set(sid, forKey: "sid")
+          
+            }
+           
     }
         
     func getImage(path: String, domainPath: String) {

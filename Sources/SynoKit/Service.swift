@@ -34,6 +34,7 @@ public struct Service {
                 completion(Data(), false)
                 print(error)
                 print(error.localizedDescription)
+                print("Used path: \(path)")
             }
         }
     }
