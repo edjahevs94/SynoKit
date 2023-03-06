@@ -11,7 +11,7 @@ import UIKit
 class ImageCache {
     var cache: NSCache<NSString, UIImage> = {
         let imageCache = NSCache<NSString, UIImage>()
-        imageCache.countLimit = 15
+        imageCache.countLimit = 30
         imageCache.totalCostLimit = 1024 * 1024 * 50
         //imageCache.totalCostLimit = 1024 * 1024 * 50
         return imageCache

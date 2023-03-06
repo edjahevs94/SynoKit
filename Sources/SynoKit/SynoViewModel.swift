@@ -12,12 +12,8 @@ public class ViewModel: ObservableObject {
     
     var imageCache  = ImageCache.getImageCache()
     @Published var imageC: UIImage?
-    @Published var loading: Bool = true
-    //new version with workspace
-    init(user: String, password: String, photoPath: String, domainPath: String) {
-        if UserDefaults.standard.string(forKey: "did") == nil && UserDefaults.standard.string(forKey: "sid") == nil{
-            loginSynology(domainPath: domainPath, user: user, password: password)
-        }
+    init(photoPath: String, domainPath: String) {
+       
         setSynoImage(photoPath: photoPath, domainPath: domainPath)
     }
     
@@ -25,15 +21,13 @@ public class ViewModel: ObservableObject {
         if photoPath.contains("jpeg") || photoPath.contains("png") || photoPath.contains("jpg") {
             if loadImageFromCache(path: photoPath) {
                 //print("usando cache sin llamar al servicio")
-                loading = false
                 return
             }
             //print("nueva imagen llamando al servicio")
             getImage(path: photoPath, domainPath: domainPath)
-        } else {
-            //print("Image format is incorrect: Only jpeg, jpg or png formats are allowed.")
-            loading = false
         }
+            //print("Image format is incorrect: Only jpeg, jpg or png formats are allowed.")
+       
     }
     
     func loginSynology(domainPath: String, user: String, password: String) {
@@ -52,11 +46,11 @@ public class ViewModel: ObservableObject {
     func getImage(path: String, domainPath: String) {
         Service.shared.download(path: path, domainPath: domainPath) { response , loading  in
             guard let loadedImage = UIImage(data: response) else {
-                self.loading = loading
+             
                 return
             }
             self.imageC = loadedImage.aspectFittedToHeight(newHeight: 200)
-            self.loading = loading
+          
             self.imageCache.set(forKey: path, image: loadedImage.aspectFittedToHeight(newHeight: 200))
         }
             
